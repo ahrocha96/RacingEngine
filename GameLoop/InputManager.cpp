@@ -1,89 +1,116 @@
 #include<GLFW/glfw3.h>
 #include <iostream>
 #include <array>
+#include <InputManagerBase.h>
 
-class InputManager {
+class InputManager : public InputManagerBase {
 public:
-	InputManager(GLFWwindow* window);
+	virtual void setEventHandling() { event_handling_instance = this; }
 
-	~InputManager();
+	InputManager(GLFWwindow* window) {
+		Initialize(window);
+	}
 
-	bool Initialize(GLFWwindow* window);
+	bool Initialize(GLFWwindow* window) {
+		mouseX = mouseY = 0;
+		gameWindow = window;
+		setEventHandling();
+		glfwSetKeyCallback(window, InputManagerBase::OnKeyEvent_dispatch);
+		glfwSetCursorPosCallback(window, InputManagerBase::OnMouseMove_dispatch);
+		glfwSetMouseButtonCallback(window, InputManagerBase::OnMouseButtonEvent_dispatch);
+		std::cout << "initialized";
+		return true;
+	}
 
-	static std::array<bool, GLFW_KEY_LAST>GetKeyboardState();
+	~InputManager() {
+		glfwTerminate();
+	}
 
-	static std::array<bool, GLFW_MOUSE_BUTTON_LAST>GetMouseButtonState();
+	void OnMouseMove(GLFWwindow* window, double x, double y) {
+		mouseX = x;
+		mouseY = y;
+		/*std::cout << "(" << x << ", ";s
+		std::cout << y << ")\n";*/
+	}
 
-	static void OnKeyEvent(GLFWwindow* window, int key, int scancode, int action, int mods);
+	void OnMouseButtonEvent(GLFWwindow* window, int button, int action, int mods) {
+		if (action == GLFW_PRESS) {
+			//std::cout << "You pressed mouse " << button << "!\n";
+			mouseButtons[button] = true;
+		}
+		else if (action == GLFW_RELEASE) {
+			std::cout << "You released mouse " << button << "!\n";
+			mouseButtons[button] = false;
+		}
+	}
 
-	static void OnMouseMove(GLFWwindow* window, double x, double y);
-	
-	static void OnMouseButtonEvent(GLFWwindow* window, int button, int action, int mods);
+	std::array<bool, GLFW_KEY_LAST> GetKeyboardState() {
+		return keyboardState;
+	}
+
+	std::array<bool, GLFW_MOUSE_BUTTON_LAST> GetMouseButtonState() {
+		return mouseButtons;
+	}
+
+	void OnKeyEvent(GLFWwindow* window, int key, int scancode, int action, int mods) {
+		if (action == GLFW_PRESS) {
+			keyboardState[key] = true;
+			//std::cout << "You pressed " << key << "!\n";
+		}
+		else if (action == GLFW_RELEASE) {
+			std::cout << "You released " << key << "!\n";
+			keyboardState[key] = false;
+		}
+	}
 
 private:
-	GLFWwindow* window;
-	static std::array<bool, GLFW_KEY_LAST> keyboardState;
-	static std::array<bool, GLFW_MOUSE_BUTTON_LAST> mouseButtons;
-	static double mouseX;
-	static double mouseY;
+	GLFWwindow* gameWindow;
+	std::array<bool, GLFW_KEY_LAST> keyboardState;
+	std::array<bool, GLFW_MOUSE_BUTTON_LAST> mouseButtons;
+	double mouseX;
+	double mouseY;
 };
 
-InputManager::InputManager(GLFWwindow* window){
-	Initialize(window);
+void framebuffer_size_callback(GLFWwindow* window, int width, int height)
+{
+	glViewport(0, 0, width, height);
 }
 
-InputManager::~InputManager() {
-	glfwTerminate();
-}
-
-bool InputManager::Initialize(GLFWwindow* window) {
-	mouseX = mouseY = 0;
-	this->window = window;
-
+int initGlfw() {
 	if (!glfwInit()) {
-		std::cerr << "Failed to initialize GLFW" << std::endl;
-		return false;
+		std::cout << "Failed to initialize GLFW";
+		return -1;
 	}
 
-	glfwSetKeyCallback(window, &InputManager::OnKeyEvent);
-	glfwSetCursorPosCallback(window, &InputManager::OnMouseMove);
-	glfwSetMouseButtonCallback(window, &InputManager::OnMouseButtonEvent);
+	glfwWindowHint(GLFW_SAMPLES, 4); // anti aliasing
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3); // openGL major version to be 3
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0); // minor set to 3, which makes the version 3.3
+	glfwWindowHint(GLFW_OPENGL_COMPAT_PROFILE, GLFW_OPENGL_CORE_PROFILE); //avoid using old openGL
 
-	return true;
-}
+	GLFWwindow* window = glfwCreateWindow(640, 480, "My Title", NULL, NULL);
 
-void InputManager::OnKeyEvent(GLFWwindow* window, int key, int scancode, int action, int mods) {
-	if (action == GLFW_PRESS) {
-		keyboardState[key] = true;
+	if (window == NULL)
+	{
+		std::cout << "Failed to create GLFW window" << std::endl;
+		glfwTerminate();
+		return -1;
 	}
-	else if (action == GLFW_RELEASE) {
-		keyboardState[key] = false;
+
+	glfwMakeContextCurrent(window);
+	glViewport(0, 0, 800, 600);
+	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+
+	InputManager input1(window);
+
+	while (!glfwWindowShouldClose(window))
+	{
+		glfwSwapBuffers(window);
+		glfwPollEvents();
 	}
+	return 0;
 }
-
-void InputManager::OnMouseMove(GLFWwindow* window, double x, double y) {
-	mouseX = x;
-	mouseY = y;
-}
-
-void InputManager::OnMouseButtonEvent(GLFWwindow* window, int button, int action, int mods) {
-	if (action == GLFW_PRESS) {
-		mouseButtons[button] = true;
-	}
-	else if(action == GLFW_RELEASE){
-		mouseButtons[button] = false;
-	}
-}
-
-std::array<bool, GLFW_KEY_LAST> InputManager::GetKeyboardState() {
-	return keyboardState;
-}
-
-std::array<bool, GLFW_MOUSE_BUTTON_LAST> InputManager::GetMouseButtonState()  {
-	return mouseButtons;
-}
-
-
 int main() {
-
+	return initGlfw();
 }
+
+
