@@ -5,11 +5,13 @@ class InputManagerBase
 {
 public:
 
-    virtual void OnKeyEvent(GLFWwindow* window, int key, int scancode, int action, int mods) = 0; 
+    static InputManagerBase* event_handling_instance;
+
+    virtual void setEventHandling();
+
+    virtual void OnKeyEvent(GLFWwindow* window, int key, int scancode, int action, int mods) = 0;
     virtual void OnMouseButtonEvent(GLFWwindow* window, int button, int action, int mods) = 0;
     virtual void OnMouseMove(GLFWwindow* window, double x, double y) = 0;
-
-    static InputManagerBase* event_handling_instance;
 
     static void OnKeyEvent_dispatch(GLFWwindow* window, int key, int scancode, int action, int mods)
     {
@@ -26,8 +28,4 @@ public:
         if (event_handling_instance)
             event_handling_instance->OnMouseMove(window, x, y);
     }
-
 };
-
-#include "InputManagerBase.h"
-InputManagerBase* InputManagerBase::event_handling_instance;

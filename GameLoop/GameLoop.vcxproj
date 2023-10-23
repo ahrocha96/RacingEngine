@@ -19,9 +19,14 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="GameLoop.cpp" />
     <ClCompile Include="InputManager.cpp" />
+    <ClCompile Include="InputManagerBase.cpp" />
+    <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="GameLoop.h" />
+    <ClInclude Include="InputManager.h" />
     <ClInclude Include="InputManagerBase.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
