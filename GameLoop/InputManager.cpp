@@ -10,7 +10,7 @@ bool InputManager::Initialize(GLFWwindow* window) {
 	gameWindow = window;
 	InputManager::setEventHandling();
 
-	std::cout << "initialized";
+	std::cout << "Input Manager initialized" << std::endl;
 	return true;
 }
 
