@@ -70,6 +70,22 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IncludePath>C:\git\RacingEngine\libraries\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\git\RacingEngine\libraries\lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <IncludePath>C:\git\RacingEngine\libraries\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\git\RacingEngine\libraries\lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>C:\git\RacingEngine\libraries\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\git\RacingEngine\libraries\lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <IncludePath>C:\git\RacingEngine\libraries\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\git\RacingEngine\libraries\lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -80,6 +96,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>glfw3.lib;opengl32.lib;$(CoreLibraryDependencies);%(AdditionalDependencies);</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -96,6 +113,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>glfw3.lib;opengl32.lib;$(CoreLibraryDependencies);%(AdditionalDependencies);</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -104,13 +122,14 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\git\RacingEngine\Demo;C:\libraries\glfw-3.3.8.bin.WIN64\include;$(SolutionDir)ResourceManager;$(SolutionDir)GameLoop;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\git\RacingEngine\Demo;$(SolutionDir)ResourceManager;$(SolutionDir)GameLoop;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\libraries\glfw-3.3.8.bin.WIN64\lib-vc2022</AdditionalLibraryDirectories>
-      <AdditionalDependencies>$(CoreLibraryDependencies);%(AdditionalDependencies);glfw3.lib;opengl32.lib;user32.lib;gdi32.lib;shell32.lib;</AdditionalDependencies>
+      <AdditionalLibraryDirectories>
+      </AdditionalLibraryDirectories>
+      <AdditionalDependencies>glfw3.lib;opengl32.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -121,15 +140,16 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\git\RacingEngine\Demo;C:\libraries\glfw-3.3.8.bin.WIN64\include;$(SolutionDir)ResourceManager;$(SolutionDir)GameLoop;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\git\RacingEngine\Demo;$(SolutionDir)ResourceManager;$(SolutionDir)GameLoop;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\libraries\glfw-3.3.8.bin.WIN64\lib-vc2022</AdditionalLibraryDirectories>
-      <AdditionalDependencies>$(CoreLibraryDependencies);%(AdditionalDependencies);glfw3.lib;opengl32.lib;user32.lib;gdi32.lib;shell32.lib;</AdditionalDependencies>
+      <AdditionalLibraryDirectories>
+      </AdditionalLibraryDirectories>
+      <AdditionalDependencies>glfw3.lib;opengl32.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>

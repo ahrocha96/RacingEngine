@@ -1,6 +1,6 @@
+#include <iostream>
 #include <InputManager.h>
 #include <InputManagerBase.h>
-#include <iostream>
 
 InputManager::InputManager(GLFWwindow* window) {
     Initialize(window);
