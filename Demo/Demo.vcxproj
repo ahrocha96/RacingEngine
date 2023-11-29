@@ -154,6 +154,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\GameLoop\Main.cpp" />
+    <ClCompile Include="..\glad.c" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GameLoop\GameLoop.vcxproj">

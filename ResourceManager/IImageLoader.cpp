@@ -21,5 +21,4 @@ void IImageLoader::LoadImage(const char* filename, int* width, int* height, int*
 	else {
 		std::cout << "Image failed to load" << std::endl;
 	}
-
 };

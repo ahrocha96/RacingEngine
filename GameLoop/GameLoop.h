@@ -1,6 +1,7 @@
 #pragma once
 #include<iostream>
 #include<array>
+#include<glad/glad.h>
 #include<GLFW/glfw3.h>
 #include<InputManager.h>
 
@@ -15,10 +16,10 @@ private:
 	int windowWidth;
 	int windowHeight;
 	std::string windowTitle;
-	InputManager inputManager;
+	InputManager inputManager = NULL;
 
 	static void framebuffer_size_callback(GLFWwindow* window, int width, int height);
-	int initGlfw();
+	int configureWindow();
 	void processInput();
 	void update();
 	void render(GLFWwindow* window);
